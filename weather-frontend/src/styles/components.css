@@ -1,0 +1,6 @@
+.brand { font-weight:700; font-size:1.2rem }
+.nav-links a { color:white; margin-left:12px }
+.weather-card .main-row { display:flex; gap:12px; align-items:center }
+.weather-card .temp { font-size:2.6rem; font-weight:600 }
+.weather-card .meta { font-size:0.95rem; color:#333 }
+.alert { background:#fff3f3; padding:8px; border-left:4px solid #ff6b6b; margin-bottom:8px; border-radius:4px }

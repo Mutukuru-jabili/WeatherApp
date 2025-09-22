@@ -1,0 +1,117 @@
+import React, { useEffect, useState } from "react";
+import {
+  getFavoriteLocations,
+  saveFavoriteLocation,
+  deleteFavoriteLocation,
+  updateFavoriteLocation,
+} from "../api/weatherApi";
+import "../css/FavoriteLocations.css";
+
+export default function FavoriteLocations() {
+  const [favorites, setFavorites] = useState([]);
+  const [label, setLabel] = useState("");
+  const [city, setCity] = useState("");
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Fetch all favorites
+  async function fetchFavorites() {
+    setLoading(true);
+    setMsg("");
+    try {
+      const res = await getFavoriteLocations();
+      setFavorites(res.data || []);
+    } catch (err) {
+      console.error("Error fetching favorites:", err);
+      setMsg("⚠️ Failed to load favorite locations.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  // Add new favorite
+  async function addFavorite() {
+    if (!label.trim() || !city.trim()) {
+      setMsg("⚠️ Please enter both label and city.");
+      return;
+    }
+
+    try {
+      await saveFavoriteLocation({ name: label, city });
+      setLabel("");
+      setCity("");
+      setMsg("✅ Location saved successfully!");
+      fetchFavorites();
+    } catch (err) {
+      console.error("Error saving favorite:", err);
+      setMsg("⚠️ Failed to save location.");
+    }
+  }
+
+  // Delete favorite
+  async function removeFavorite(id) {
+    try {
+      await deleteFavoriteLocation(id);
+      setMsg("🗑️ Deleted successfully!");
+      fetchFavorites();
+    } catch (err) {
+      console.error("Error deleting favorite:", err);
+      setMsg("⚠️ Failed to delete.");
+    }
+  }
+
+  // Update favorite
+  async function editFavorite(id) {
+    const newName = prompt("Enter new label:");
+    if (!newName) return;
+    try {
+      await updateFavoriteLocation(id, { name: newName });
+      setMsg("✏️ Updated successfully!");
+      fetchFavorites();
+    } catch (err) {
+      console.error("Error updating favorite:", err);
+      setMsg("⚠️ Failed to update.");
+    }
+  }
+
+  return (
+    <div className="favorites">
+      <h3>⭐ Favorite Locations</h3>
+      {msg && <p className="msg">{msg}</p>}
+
+      <div className="fav-form">
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          placeholder="Label (Home, Work...)"
+        />
+        <input
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="City name"
+        />
+        <button onClick={addFavorite}>Save</button>
+      </div>
+
+      {loading ? (
+        <p>⏳ Loading favorites...</p>
+      ) : favorites.length > 0 ? (
+        <ul>
+          {favorites.map((f) => (
+            <li key={f.id}>
+              <strong>{f.name}</strong> — {f.city}
+              <button onClick={() => editFavorite(f.id)}>✏️</button>
+              <button onClick={() => removeFavorite(f.id)}>❌</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No favorites yet. Add one above 👆</p>
+      )}
+    </div>
+  );
+}

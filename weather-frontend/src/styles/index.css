@@ -1,0 +1,16 @@
+:root { font-family: Inter, system-ui, Arial, sans-serif; --max: 1100px }
+body { margin:0; padding:0; background: #f7fafc; color:#111 }
+.container { max-width: var(--max); margin: 20px auto; padding: 0 16px }
+.app-root { display:flex; flex-direction:column; min-height:100vh }
+.header, .footer { background: #0ea5a4; color: white; padding: 12px 16px }
+.header { display:flex; justify-content:space-between; align-items:center }
+.header .nav-links a { color:white; margin-left:12px; text-decoration:none }
+.grid { display:grid; grid-template-columns: 2fr 1fr; gap:16px; align-items:start }
+.weather-card { background:white; padding:16px; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.08) }
+.forecast-list { display:flex; gap:8px; margin-top:12px }
+.forecast-item { background:#fff; padding:8px; border-radius:6px; min-width:90px; text-align:center }
+.side { display:flex; flex-direction:column; gap:12px }
+.searchbar { display:flex; gap:8px; margin-bottom:12px }
+.searchbar input { flex:1; padding:8px }
+footer.footer { margin-top:auto; display:flex; justify-content:space-between }
+.map-placeholder { margin-top:8px; padding:16px; background:#eef2f7; border-radius:6px; text-align:center }

@@ -1,0 +1,11 @@
+.tips {
+  background: #eef6ff;
+  border-left: 4px solid #0078d7;
+  padding: 0.8em;
+  border-radius: 6px;
+}
+
+.tips ul {
+  margin: 0;
+  padding-left: 1.2em;
+}

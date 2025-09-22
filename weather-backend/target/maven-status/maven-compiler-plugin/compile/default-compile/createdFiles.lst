@@ -1,0 +1,14 @@
+com\example\weatherapp\dto\WeatherDTO.class
+com\example\weatherapp\entity\User.class
+com\example\weatherapp\service\AuthService.class
+com\example\weatherapp\entity\Role.class
+com\example\weatherapp\service\WeatherService.class
+com\example\weatherapp\repository\UserRepository.class
+com\example\weatherapp\dto\WeatherDTO$DayDTO.class
+com\example\weatherapp\entity\FavoriteLocation.class
+com\example\weatherapp\controller\FavoriteLocationController.class
+com\example\weatherapp\config\SecurityConfig.class
+com\example\weatherapp\controller\AuthController.class
+com\example\weatherapp\controller\WeatherController.class
+com\example\weatherapp\repository\FavoriteLocationRepository.class
+com\example\weatherapp\WeatherAppApplication.class

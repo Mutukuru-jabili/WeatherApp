@@ -1,0 +1,168 @@
+/* --- Main container --- */
+.settings-container {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* --- Controls bar --- */
+.settings-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.settings-controls select,
+.settings-controls button {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* --- Layout (list + form) --- */
+.settings-main {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* --- Card style boxes --- */
+.left,
+.right {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* --- Location list --- */
+.location-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.location-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.loc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* --- Form styles --- */
+.crud-form label {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.crud-form input,
+.crud-form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.crud-form input:focus,
+.crud-form select:focus {
+  outline: none;
+  border-color: #1f6feb;
+  box-shadow: 0 0 0 2px rgba(31,111,235,0.15);
+}
+
+.form-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+/* --- Buttons --- */
+.btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #1f6feb;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #155ac5;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.btn.ghost:hover {
+  background: #f9f9f9;
+}
+
+.btn.small {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.btn.tiny {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.btn.danger {
+  background: #ef4444;
+}
+
+.btn.danger:hover {
+  background: #dc2626;
+}
+
+/* --- Messages --- */
+.msg {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.msg.success {
+  background: #e6ffed;
+  color: #065f46;
+  border: 1px solid #34d399;
+}
+
+.msg.error {
+  background: #ffebee;
+  color: #7f1d1d;
+  border: 1px solid #f87171;
+}
+
+.msg.info {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #38bdf8;
+}
