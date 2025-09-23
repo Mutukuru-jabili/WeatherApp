@@ -15,6 +15,8 @@ WORKDIR /app
 RUN apk update && apk upgrade --no-cache
 
 COPY --from=build /app/target/*.jar app.jar
+# COPY --from=build /app/target/*.jar app.jar
+
 
 ENV JAVA_OPTS=""
 EXPOSE 8080
