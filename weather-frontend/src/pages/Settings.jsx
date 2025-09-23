@@ -5,7 +5,7 @@ import {
   updateFavoriteLocation,
   deleteFavoriteLocation,
 } from "../api/weatherApi";
-import "../css/settings.css";
+import "../css/Settings.css";
 
 export default function Settings() {
   const [operation, setOperation] = useState("read"); // insert | read | update | delete
