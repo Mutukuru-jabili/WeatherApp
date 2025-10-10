@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\Cloud Devops\WeatherApp\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3493304090.index
+94511233.index
+3860335822.index
+4102050056.index
+2445078473.index
+560029091.index
