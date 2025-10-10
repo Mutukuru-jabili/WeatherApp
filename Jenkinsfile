@@ -17,11 +17,23 @@ pipeline {
       }
     }
 
+    stage('Stop Tomcat9 (only if running)') {
+      steps {
+        bat """
+        sc query "%SERVICE_NAME%" | find /I "RUNNING" >nul
+        if %ERRORLEVEL%==0 (
+          echo Stopping %SERVICE_NAME%...
+          net stop "%SERVICE_NAME%" /y
+        ) else (
+          echo %SERVICE_NAME% is already stopped.
+        )
+        """
+      }
+    }
+
     stage('Deploy Frontend to Tomcat9') {
       steps {
         bat """
-        net stop %SERVICE_NAME%
-
         if exist "%TOMCAT_HOME%\\webapps\\%FRONTEND_CTX%" (
             rmdir /S /Q "%TOMCAT_HOME%\\webapps\\%FRONTEND_CTX%"
         )
@@ -52,8 +64,36 @@ pipeline {
 
         echo === WEBAPPS AFTER BACKEND COPY ===
         dir "%TOMCAT_HOME%\\webapps"
+        """
+      }
+    }
 
-        net start %SERVICE_NAME%
+    stage('Start Tomcat9 (only if stopped)') {
+      steps {
+        bat """
+        sc query "%SERVICE_NAME%" | find /I "RUNNING" >nul
+        if %ERRORLEVEL%==0 (
+          echo %SERVICE_NAME% already running.
+        ) else (
+          echo Starting %SERVICE_NAME%...
+          net start "%SERVICE_NAME%" || (echo Ignoring non-zero code from net start & ver >nul)
+        )
+        """
+      }
+    }
+
+    stage('Wait for WAR to explode') {
+      steps {
+        bat """
+        set CTX=%TOMCAT_HOME%\\webapps\\springbootweatherapi
+        for /L %%i in (1,1,30) do (
+          if exist "%%CTX%%\\WEB-INF" (
+            echo App exploded. Proceeding.
+            goto :done
+          )
+          timeout /t 2 >nul
+        )
+        :done
         """
       }
     }
