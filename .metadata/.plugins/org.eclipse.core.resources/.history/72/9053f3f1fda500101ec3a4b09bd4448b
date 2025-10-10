@@ -1,0 +1,20 @@
+package com.example.weatherapp.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+// Lombok will generate getters, setters, constructors, toString, equals, hashCode
+@Entity
+@Table(name = "favorite_location")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FavoriteLocation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;   // e.g., "Home", "Work"
+    private String city;   // e.g., "Hyderabad", "Delhi"
+}
