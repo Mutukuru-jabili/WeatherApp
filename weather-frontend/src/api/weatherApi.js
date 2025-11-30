@@ -8,35 +8,25 @@ export const api = axios.create({
   timeout: 10000,
 });
 
-// ---------------- EXTERNAL WEATHER API ----------------
-const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-const WEATHER_API_URL = import.meta.env.VITE_WEATHER_API_URL;
+// ---------------- WEATHER (FROM BACKEND) ----------------
 
-// Current weather (city)
+// Get current weather
 export async function fetchCurrentWeatherByCity(city) {
-  const resp = await axios.get(`${WEATHER_API_URL}/weather`, {
-    params: {
-      q: city,
-      units: "metric",
-      appid: WEATHER_API_KEY,
-    },
+  const resp = await api.get(`/weather/current`, {
+    params: { city },
   });
   return resp.data;
 }
 
-// Forecast (city)
+// Get forecast
 export async function fetchForecastByCity(city) {
-  const resp = await axios.get(`${WEATHER_API_URL}/forecast`, {
-    params: {
-      q: city,
-      units: "metric",
-      appid: WEATHER_API_KEY,
-    },
+  const resp = await api.get(`/weather/forecast`, {
+    params: { city },
   });
   return resp.data;
 }
 
-// Alerts (if backend provides them)
+// Get alerts
 export async function getAlerts(city) {
   const resp = await api.get(`/weather/alerts`, {
     params: { city },
@@ -48,13 +38,13 @@ export async function getAlerts(city) {
 
 // Get all favorites
 export async function getFavoriteLocations() {
-  const resp = await api.get("/favorites");
+  const resp = await api.get(`/favorites`);
   return resp.data;
 }
 
 // Save new favorite
 export async function saveFavoriteLocation(payload) {
-  const resp = await api.post("/favorites", payload);
+  const resp = await api.post(`/favorites`, payload);
   return resp.data;
 }
 

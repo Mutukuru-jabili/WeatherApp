@@ -2,15 +2,14 @@ package com.example.weatherapp.controller;
 
 import com.example.weatherapp.entity.FavoriteLocation;
 import com.example.weatherapp.repository.FavoriteLocationRepository;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/favorites")
+@CrossOrigin(origins = "*")
 public class FavoriteLocationController {
 
     private final FavoriteLocationRepository repository;
@@ -33,7 +32,7 @@ public class FavoriteLocationController {
 
     // READ BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<FavoriteLocation> getFavoriteById(@PathVariable Long id) {
+    public ResponseEntity<FavoriteLocation> getById(@PathVariable Long id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -41,13 +40,14 @@ public class FavoriteLocationController {
 
     // UPDATE
     @PutMapping("/{id}")
-    public ResponseEntity<FavoriteLocation> updateFavorite(
-            @PathVariable Long id, @RequestBody FavoriteLocation updatedLocation) {
+    public ResponseEntity<FavoriteLocation> update(
+            @PathVariable Long id,
+            @RequestBody FavoriteLocation updated) {
 
         return repository.findById(id)
                 .map(existing -> {
-                    existing.setName(updatedLocation.getName());
-                    existing.setCity(updatedLocation.getCity());
+                    existing.setName(updated.getName());
+                    existing.setCity(updated.getCity());
                     return ResponseEntity.ok(repository.save(existing));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -55,11 +55,9 @@ public class FavoriteLocationController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (!repository.existsById(id)) return ResponseEntity.notFound().build();
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
