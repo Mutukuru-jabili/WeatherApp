@@ -13,7 +13,7 @@ services:
       - springboot-mysql-net
 
   backend:
-    image: jabili32301/docker-backend:latest
+    image: jabili32301/waether-docker-backend:latest
     container_name: springboot
     ports:
       - "8099:8099"
@@ -24,7 +24,7 @@ services:
       - springboot-mysql-net
 
   frontend:
-    image: jabili32301/docker-frontend:latest
+    image: jabili32301/weather-docker-frontend:latest
     container_name: react
     ports:
       - "3000:80"
