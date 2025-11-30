@@ -1,23 +1,24 @@
-# ---------- Build stage ----------
-FROM maven:3.9-eclipse-temurin-21 AS build
+# Stage 1: Build the app
+FROM eclipse-temurin:21-jdk AS builder
+
 WORKDIR /app
 
-COPY pom.xml .
-RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests dependency:go-offline
+COPY mvnw .          
+COPY .mvn/ .mvn
 
+RUN chmod +x mvnw
+
+COPY pom.xml ./
 COPY src ./src
-RUN --mount=type=cache,target=/root/.m2 mvn -B -DskipTests clean install package
 
-# ---------- Run stage ----------
-FROM eclipse-temurin:21-jre-alpine AS runtime
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Run the app
+FROM eclipse-temurin:21-jdk
+
 WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 
-RUN apk update && apk upgrade --no-cache
+EXPOSE 8099
 
-COPY --from=build /app/target/*.jar app.jar
-# COPY --from=build /app/target/*.jar app.jar
-
-
-ENV JAVA_OPTS=""
-EXPOSE 8080
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
