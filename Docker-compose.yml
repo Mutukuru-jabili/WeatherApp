@@ -26,6 +26,9 @@ services:
   frontend:
     image: jabili32301/weatherapp-docker-frontend:latest
     container_name: reactx
+
+
+    
     ports:
       - "3001:80"   # Updated port to avoid conflict
     depends_on:
