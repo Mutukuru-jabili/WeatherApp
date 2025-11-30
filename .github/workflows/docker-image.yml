@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./weather-backend
-          file: ./weather-backend/backend.Dockerfile
+          file: ./weather-backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/weatherApp-docker-backend:latest
 
@@ -39,6 +39,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./weather-frontend
-          file: ./weather-frontend/frontend.Dockerfile
+          file: ./weather-frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/weatherApp-docker-frontend:latest
