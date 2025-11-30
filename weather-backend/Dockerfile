@@ -1,22 +1,22 @@
-# Stage 1: Build the app
+# ---- Stage 1: Build ----
 FROM eclipse-temurin:21-jdk AS builder
 
 WORKDIR /app
 
-COPY mvnw .          
-COPY .mvn/ .mvn
+# Install Maven inside container since mvnw is missing
+RUN apt-get update && apt-get install -y maven
 
-RUN chmod +x mvnw
-
-COPY pom.xml ./
+# Copy project files
+COPY pom.xml .
 COPY src ./src
 
-RUN ./mvnw clean package -DskipTests
+# Build spring boot project
+RUN mvn clean package -DskipTests
 
-# Stage 2: Run the app
+# ---- Stage 2: Run ----
 FROM eclipse-temurin:21-jdk
-
 WORKDIR /app
+
 COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8099

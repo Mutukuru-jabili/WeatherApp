@@ -13,7 +13,7 @@ services:
       - springboot-mysql-net
 
   backend:
-    image: jabili32301/waetherapp-docker-backend:latest
+    image: jabili32301/weatherapp-docker-backend:latest
     container_name: backend
     ports:
       - "8099:8099"
